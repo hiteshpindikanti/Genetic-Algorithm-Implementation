@@ -1,4 +1,4 @@
-# Genetic_Algorithm_Implementation
+# Genetic Algorithm Implementation
 Basic Genetic Algorithm implementation: Text Evolving into meaningful sentences
 
 Population limit = 2000
