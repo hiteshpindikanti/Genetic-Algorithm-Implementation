@@ -1,8 +1,9 @@
 from random import choice,randrange,random
 from string import ascii_uppercase
+import matplotlib.pylab as plt
 
 #String to be reached at final, i.e. the fittest string
-idealString = "MY NAME IS PINDIKANTI HITESH. I AM A GOOD BOY."
+idealString = "MY NAME IS PINDIKANTI HITESH. I AM A GOOD BOY"
 
 #Basic Variables to set a limit.
 generations = 40
@@ -32,14 +33,20 @@ def mutate(string):
 
 
 populationFitness = [[0,''.join(choice(ascii_uppercase + " " + ".") for i in range(len(idealString)))] for i in range(population)]
+generation_data = []
 
 for gen in range(generations):
+     
     for pop in range(population):
         populationFitness[pop][0] = checkFitness(populationFitness[pop][1])
 
     #arrange population according to their fitness    
     populationFitness.sort(reverse=True)
 
+    #Saving data for graphs
+    all_fitness_scores = [populationFitness[i][0] for i in range(population)]
+    generation_data.append([gen+1, all_fitness_scores[-1], all_fitness_scores[0], sum(all_fitness_scores)/population])
+    
     #display the best member of the current population
     print "Generation ",gen+1," : Fitness = ",populationFitness[0][0]," Best Member = ",populationFitness[0][1]
 
@@ -52,3 +59,14 @@ for gen in range(generations):
         #perform mutation at probability 20%
         if(random()<0.2):
             populationFitness[pop][1] = mutate(populationFitness[pop][1])
+
+#display Graphs
+plt.plot([generation_data[i][0] for i in range(generations)],[generation_data[i][2] for i in range(generations)],color='green',label='Max Fitness')
+plt.plot([generation_data[i][0] for i in range(generations)],[generation_data[i][3] for i in range(generations)],color='blue',label='Average Fitness')
+plt.plot([generation_data[i][0] for i in range(generations)],[generation_data[i][1] for i in range(generations)],color='red',label='Min Fitness')
+plt.plot([generation_data[i][0] for i in range(generations)],[len(idealString) for i in range(generations)],color='black',label='Max Possible Fitness')
+plt.legend()
+plt.title('Genetic Algorithm: population=' +str(population))
+plt.xlabel('Generations')
+plt.ylabel('Fitness Score')
+plt.show()
