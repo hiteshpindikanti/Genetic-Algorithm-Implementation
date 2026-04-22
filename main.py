@@ -48,7 +48,8 @@ for gen in range(generations):
     generation_data.append([gen+1, all_fitness_scores[-1], all_fitness_scores[0], sum(all_fitness_scores)/population])
     
     #display the best member of the current population
-    print "Generation ",gen+1," : Fitness = ",populationFitness[0][0]," Best Member = ",populationFitness[0][1]
+    print ("Generation ",gen+1," : Fitness = ",populationFitness[0][0]," Best Member = ",populationFitness[0][1])
+    
 
     #kill the weakest 50% of the population and perform crossovers on the top 50%
     for pop in range(population/2,population):
